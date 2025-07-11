@@ -2,7 +2,11 @@
 
 A full-stack casino slot game built with **Node.js (TypeScript)**, **React (Vite)**, **MongoDB Atlas**, and **Upstash Redis**. The game supports JWT-based authentication, spinning logic with weighted symbols, user balance handling, transaction history, and a Redis-cached leaderboard.
 
----
+## 🌐 Live Demo
+
+🔗 [casino-slot-frontend.onrender.com](https://casino-slot-frontend.onrender.com)
+
+### Use the sample user below or register a new one.
 
 ## ✨ Features
 
@@ -26,6 +30,15 @@ A full-stack casino slot game built with **Node.js (TypeScript)**, **React (Vite
 - **Cache**: Upstash Redis
 - **Auth**: JWT
 - **Other**: Axios, Context API, ESLint
+
+---
+
+## 🔔 Notifications
+
+✅ **Toast notifications** for feedback (e.g., login errors, logout success)
+
+All user feedback (like errors, validation failures, and success messages) is displayed using elegant toast notifications via [`react-hot-toast`](https://react-hot-toast.com/).  
+This enhances user experience and replaces native `alert()` boxes.
 
 ---
 
