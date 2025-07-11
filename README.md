@@ -195,7 +195,12 @@ casino-slot-frontend/
 - ✅ React UI with component breakdown
 - ✅ Redis leaderboard cache (2 min TTL)
 
----
+## 🕹️ Backend Wake-Up Logic
+
+To handle cold-start delays on platforms like Render:
+
+- On first load, the frontend calls `/api/ping`.
+- Until the backend is ready, the UI shows a loading state and disables login/register buttons to improve user experience.
 
 ## 📦 Scripts
 
