@@ -14,6 +14,7 @@ const Dashboard = () => {
 	const [totalPages, setTotalPages] = useState(1);
 	const [leaderboard, setLeaderboard] = useState<{ username: string; netWin: number }[]>([]);
 	const [fromCache, setFromCache] = useState(false);
+	const [days, setDays] = useState(7);
 
 	const fetchBalance = async () => {
 		const res = await API.get("/balance");
@@ -27,16 +28,19 @@ const Dashboard = () => {
 		setTotalPages(res.data.totalPages);
 	};
 
-	const fetchLeaderboard = async () => {
-		const res = await API.get("/leaderboard?days=7");
+	const fetchLeaderboard = async (d = days) => {
+		const res = await API.get(`/leaderboard?days=${d}`);
 		setLeaderboard(res.data.data);
 		setFromCache(res.data.fromCache);
 	};
 
 	useEffect(() => {
+		fetchLeaderboard(days);
+	}, [days]);
+
+	useEffect(() => {
 		fetchBalance();
 		fetchTransactions();
-		fetchLeaderboard();
 	}, []);
 
 	return (
@@ -44,7 +48,7 @@ const Dashboard = () => {
 			<DashboardHeader />
 			<BalanceCard balance={balance} />
 			<SpinSection onSpin={() => fetchTransactions()} refreshBalance={fetchBalance} />
-			<Leaderboard leaderboard={leaderboard} fromCache={fromCache} />
+			<Leaderboard leaderboard={leaderboard} fromCache={fromCache} days={days} setDays={setDays} />
 			<TransactionHistory
 				transactions={transactions}
 				page={page}
