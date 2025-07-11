@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from "../api/axios";
 import { handleApiError } from "../utils/handleApiError";
+import toast from "react-hot-toast";
 
 const SpinSection = ({
 	onSpin,
@@ -29,6 +30,14 @@ const SpinSection = ({
 
 			onSpin(res.data.result, res.data.winAmount);
 			refreshBalance();
+			if (res.data.isFreeSpin) {
+				toast.success("🎁 You got a free spin!");
+			}
+			if (res.data.winAmount > 0) {
+				toast.success(`🎉 You won ₹${res.data.winAmount}`);
+			} else {
+				toast("Better luck next time!");
+			}
 		} catch (err) {
 			handleApiError(err, "Spin failed");
 		}

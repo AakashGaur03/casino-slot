@@ -3,10 +3,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./routes/PrivateRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
 	return (
 		<BrowserRouter>
+			<Toaster position="top-center" toastOptions={{ duration: 3000 }} />
 			<Routes>
 				<Route path="/" element={<Register />} />
 				<Route path="/register" element={<Register />} />

@@ -148,8 +148,8 @@ npm run dev
 
 ```json
 {
-	"email": "demo@casino.com",
-	"password": "demo123"
+	"username": "DemoUser",
+	"password": "Demo123"
 }
 ```
 

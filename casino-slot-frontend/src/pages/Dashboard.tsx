@@ -6,6 +6,7 @@ import SpinSection from "../components/SpinSection";
 import Leaderboard from "../components/Leaderboard";
 import TransactionHistory from "../components/TransactionHistory";
 import type { Transaction } from "../types";
+import { handleApiError } from "../utils/handleApiError";
 
 const Dashboard = () => {
 	const [balance, setBalance] = useState(0);
@@ -17,21 +18,33 @@ const Dashboard = () => {
 	const [days, setDays] = useState(7);
 
 	const fetchBalance = async () => {
-		const res = await API.get("/balance");
-		setBalance(res.data.balance);
+		try {
+			const res = await API.get("/balance");
+			setBalance(res.data.balance);
+		} catch (err) {
+			handleApiError(err, "Failed to fetch balance");
+		}
 	};
 
 	const fetchTransactions = async (p = 1) => {
-		const res = await API.get(`/transactions?page=${p}&limit=5`);
-		setTransactions(res.data.transactions);
-		setPage(res.data.page);
-		setTotalPages(res.data.totalPages);
+		try {
+			const res = await API.get(`/transactions?page=${p}&limit=5`);
+			setTransactions(res.data.transactions);
+			setPage(res.data.page);
+			setTotalPages(res.data.totalPages);
+		} catch (err) {
+			handleApiError(err, "Failed to fetch transactions");
+		}
 	};
 
 	const fetchLeaderboard = async (d = days) => {
-		const res = await API.get(`/leaderboard?days=${d}`);
-		setLeaderboard(res.data.data);
-		setFromCache(res.data.fromCache);
+		try {
+			const res = await API.get(`/leaderboard?days=${d}`);
+			setLeaderboard(res.data.data);
+			setFromCache(res.data.fromCache);
+		} catch (err) {
+			handleApiError(err, "Failed to fetch leaderboard");
+		}
 	};
 
 	useEffect(() => {

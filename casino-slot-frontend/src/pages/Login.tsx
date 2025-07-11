@@ -4,6 +4,7 @@ import API from "../api/axios";
 import { useAuth } from "../context/Auth/useAuth";
 import { handleApiError } from "../utils/handleApiError";
 import { useBackendStatus } from "../context/BackendStatus/useBackendStatus";
+import toast from "react-hot-toast";
 
 const Login = () => {
 	const { login } = useAuth();
@@ -12,17 +13,30 @@ const Login = () => {
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!isReady) return;
+		if (!isReady || loading) return;
+
+		if (username.trim().length < 3 || password.trim().length < 6) {
+			return toast.error("Username must be at least 3 characters and password at least 6 characters.");
+		}
 
 		try {
-			const res = await API.post("/auth/login", { username, password });
+			setLoading(true);
+			const res = await API.post("/auth/login", {
+				username: username.trim(),
+				password: password.trim(),
+			});
+			console.log(res, "sdfdsf");
 			login(res.data.token, res.data.username);
+			toast.success("Login successful!");
 			navigate("/dashboard");
 		} catch (err) {
 			handleApiError(err, "Login failed");
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -42,7 +56,7 @@ const Login = () => {
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 						className="w-full border p-2 rounded"
-						disabled={!isReady}
+						disabled={!isReady || loading}
 					/>
 
 					<input
@@ -51,15 +65,15 @@ const Login = () => {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						className="w-full border p-2 rounded"
-						disabled={!isReady}
+						disabled={!isReady || loading}
 					/>
 
 					<button
 						type="submit"
 						className="w-full bg-purple-600 text-white py-2 rounded disabled:bg-purple-300"
-						disabled={!isReady}
+						disabled={!isReady || loading}
 					>
-						Login
+						{loading ? "Logging in..." : "Login"}
 					</button>
 				</form>
 

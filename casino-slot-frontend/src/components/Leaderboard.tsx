@@ -7,7 +7,6 @@ interface LeaderboardProps {
 	setDays: (d: number) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Leaderboard: FC<LeaderboardProps> = ({ leaderboard, fromCache, days, setDays }) => (
 	<div className="mt-8">
 		<div className="flex justify-between items-center mb-2">
