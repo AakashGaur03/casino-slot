@@ -13,32 +13,42 @@ export const spin = async (req: Request, res: Response) => {
 
 	try {
 		const user = await User.findById(userId);
-		if (!user || user.balance < wager) {
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		const isFreeSpin = Math.random() < 0.1;
+
+		if (!isFreeSpin && user.balance < wager) {
 			return res.status(400).json({ message: "Insufficient balance" });
+		}
+
+		if (!isFreeSpin) {
+			user.balance -= wager;
 		}
 
 		const result = spinReels();
 		const winAmount = calculatePayout(result, wager);
 
-		// Update balance
-		user.balance = user.balance - wager + winAmount;
+		user.balance += winAmount;
 		await user.save();
 
-		// Save transaction
 		await Transaction.create({
 			userId,
-			wager,
+			wager: isFreeSpin ? 0 : wager,
 			result,
 			winAmount,
 		});
 
 		res.json({
 			result,
-			wager,
+			wager: isFreeSpin ? 0 : wager,
 			winAmount,
 			newBalance: user.balance,
+			isFreeSpin,
 		});
 	} catch (err) {
+		console.error(err);
 		res.status(500).json({ message: "Spin failed", error: err });
 	}
 };

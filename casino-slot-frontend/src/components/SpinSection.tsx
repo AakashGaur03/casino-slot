@@ -12,12 +12,21 @@ const SpinSection = ({
 	const [wager, setWager] = useState(100);
 	const [result, setResult] = useState<string[] | null>(null);
 	const [winAmount, setWinAmount] = useState<number | null>(null);
+	const [isFreeSpin, setIsFreeSpin] = useState(false);
 
 	const spin = async () => {
 		try {
+			// Reset previous result state
+			setResult(null);
+			setWinAmount(null);
+			setIsFreeSpin(false);
+
 			const res = await API.post("/spin", { wager });
+
 			setResult(res.data.result);
 			setWinAmount(res.data.winAmount);
+			setIsFreeSpin(res.data.isFreeSpin || false);
+
 			onSpin(res.data.result, res.data.winAmount);
 			refreshBalance();
 		} catch (err) {
@@ -43,8 +52,9 @@ const SpinSection = ({
 			</button>
 
 			{result && (
-				<div className="text-center space-y-2">
+				<div className="text-center space-y-2 mt-4">
 					<div className="text-3xl">{result.join(" ")}</div>
+					{isFreeSpin && <div className="text-blue-600 font-bold text-sm">🎁 You got a free spin!</div>}
 					<div className="text-green-600 font-bold">You won ₹{winAmount}</div>
 				</div>
 			)}
