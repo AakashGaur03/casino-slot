@@ -43,6 +43,7 @@ const Leaderboard: FC<LeaderboardProps> = ({ leaderboard, fromCache, days, setDa
 		)}
 
 		{/* <div className="text-xs text-gray-500 mt-2">{fromCache ? "⚡ Served from Redis cache" : "🔄 Fresh data"}</div> */}
+		<div className="text-xs text-gray-500 mt-2">{fromCache ? "" : ""}</div>
 	</div>
 );
 
