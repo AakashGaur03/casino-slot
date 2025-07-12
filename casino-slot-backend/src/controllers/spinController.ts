@@ -17,11 +17,11 @@ export const spin = async (req: Request, res: Response) => {
 			return res.status(404).json({ message: "User not found" });
 		}
 
-		const isFreeSpin = Math.random() < 0.1;
-
-		if (!isFreeSpin && user.balance < wager) {
-			return res.status(400).json({ message: "Insufficient balance" });
+		if (user.balance < wager) {
+			return res.status(400).json({ message: "Insufficient balance to spin" });
 		}
+
+		const isFreeSpin = Math.random() < 0.1;
 
 		if (!isFreeSpin) {
 			user.balance -= wager;
