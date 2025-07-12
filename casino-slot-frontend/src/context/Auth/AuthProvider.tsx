@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		localStorage.removeItem("username");
 		setToken(null);
 		setUsername(null);
-		console.log("first");
 		if (reason === "expired") {
 			// toast.error("Session expired. Please login again.");
 		} else {

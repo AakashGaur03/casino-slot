@@ -29,7 +29,6 @@ const Login = () => {
 				username: username.trim(),
 				password: password.trim(),
 			});
-			console.log(res, "sdfdsf");
 			login(res.data.token, res.data.username);
 			toast.success("Login successful!");
 			navigate("/dashboard");

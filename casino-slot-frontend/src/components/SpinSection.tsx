@@ -3,13 +3,7 @@ import API from "../api/axios";
 import { handleApiError } from "../utils/handleApiError";
 import toast from "react-hot-toast";
 
-const SpinSection = ({
-	onSpin,
-	refreshBalance,
-}: {
-	onSpin: (result: string[], winAmount: number) => void;
-	refreshBalance: () => void;
-}) => {
+const SpinSection = ({ onSpin, refreshBalance }: { onSpin: () => void; refreshBalance: () => void }) => {
 	const [wager, setWager] = useState("100");
 	const [result, setResult] = useState<string[] | null>(null);
 	const [winAmount, setWinAmount] = useState<number | null>(null);
@@ -32,7 +26,7 @@ const SpinSection = ({
 			setWinAmount(res.data.winAmount);
 			setIsFreeSpin(res.data.isFreeSpin || false);
 
-			onSpin(res.data.result, res.data.winAmount);
+			onSpin();
 			refreshBalance();
 			if (res.data.isFreeSpin) {
 				toast.success("🎁 You got a free spin!");
