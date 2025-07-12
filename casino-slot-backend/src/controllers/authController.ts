@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 import User from "../models/User";
 
 export const register = async (req: Request, res: Response) => {
-	console.log("first");
 	const { username, password } = req.body;
 
 	try {

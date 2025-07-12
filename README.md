@@ -92,6 +92,7 @@ npm run dev
 - `POST /api/auth/login` → Returns JWT
 
 > All other endpoints require `Authorization: Bearer <token>`
+> Use the returned JWT to test protected routes.
 
 ---
 
@@ -165,8 +166,6 @@ npm run dev
 	"password": "Demo123"
 }
 ```
-
-Use the returned JWT to test protected routes.
 
 ---
 

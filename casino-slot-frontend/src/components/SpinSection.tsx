@@ -10,7 +10,7 @@ const SpinSection = ({
 	onSpin: (result: string[], winAmount: number) => void;
 	refreshBalance: () => void;
 }) => {
-	const [wager, setWager] = useState(100);
+	const [wager, setWager] = useState("100");
 	const [result, setResult] = useState<string[] | null>(null);
 	const [winAmount, setWinAmount] = useState<number | null>(null);
 	const [isFreeSpin, setIsFreeSpin] = useState(false);
@@ -21,7 +21,11 @@ const SpinSection = ({
 			setResult(null);
 			setWinAmount(null);
 			setIsFreeSpin(false);
-
+			const numericWager = parseInt(wager);
+			if (isNaN(numericWager) || numericWager < 1) {
+				toast.error("Please enter a valid wager amount");
+				return;
+			}
 			const res = await API.post("/spin", { wager });
 
 			setResult(res.data.result);
@@ -51,7 +55,7 @@ const SpinSection = ({
 				type="number"
 				min={1}
 				value={wager}
-				onChange={(e) => setWager(Number(e.target.value))}
+				onChange={(e) => setWager(e.target.value)}
 				className="border p-2 w-full"
 				placeholder="Enter wager"
 			/>

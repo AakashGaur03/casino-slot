@@ -13,4 +13,21 @@ API.interceptors.request.use((config) => {
 	return config;
 });
 
+let onLogout: ((reason: "expired") => void) | null = null;
+
+export const setupInterceptors = (logoutFn: (reason: "expired") => void) => {
+	onLogout = logoutFn;
+
+	API.interceptors.response.use(
+		(res) => res,
+		(err) => {
+			console.log("BHEER");
+			if ((err.response?.status === 401 || err.response?.status === 403) && onLogout) {
+				onLogout("expired");
+			}
+			return Promise.reject(err);
+		}
+	);
+};
+
 export default API;

@@ -4,7 +4,7 @@ export type AuthContextType = {
 	token: string | null;
 	username: string | null;
 	login: (token: string, username: string) => void;
-	logout: () => void;
+	logout: (reason?: "expired" | "manual") => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({

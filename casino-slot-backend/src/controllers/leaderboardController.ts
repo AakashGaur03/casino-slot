@@ -23,9 +23,9 @@ export const getLeaderboard = async (req: Request, res: Response) => {
 			{
 				$group: {
 					_id: "$userId",
-					totalWager: { $sum: "$wager" },
-					totalWin: { $sum: "$winAmount" },
-					netWin: { $sum: { $subtract: ["$winAmount", "$wager"] } },
+					// totalWager: { $sum: "$wager" },
+					netWin: { $sum: "$winAmount" },
+					// netWin: { $sum: { $subtract: ["$winAmount", "$wager"] } },
 				},
 			},
 			{ $sort: { netWin: -1 } },
