@@ -2,6 +2,7 @@ import { useState } from "react";
 import API from "../api/axios";
 import { handleApiError } from "../utils/handleApiError";
 import toast from "react-hot-toast";
+import SpinInfoTooltip from "./SpinInfoTooltip";
 
 const symbols = ["🍒", "🍋", "⭐", "💎"];
 
@@ -59,8 +60,12 @@ const SpinSection = ({ onSpin, refreshBalance }: { onSpin: () => void; refreshBa
 	};
 
 	return (
-		<div className="space-y-2">
-			<h3 className="text-lg font-semibold">🎰 Spin the Slot</h3>
+		<div className="space-y-4">
+			<div className="flex justify-between">
+				<h3 className="text-lg font-semibold">🎰 Spin the Slot</h3>
+
+				<SpinInfoTooltip />
+			</div>
 
 			<input
 				type="number"
